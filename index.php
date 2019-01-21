@@ -28,8 +28,6 @@ try {
         $getStatuses = $client->request->statusesList()->statuses;
         $dataOrders[$status] = $response;
     }
-    //$status = null;
-    //$name = null;
 
 } catch (\RetailCrm\Exception\CurlException $e) {
     echo "Connection error: " . $e->getMessage();
@@ -54,7 +52,6 @@ if ($response->isSuccessful()) {
         $sheet->mergeCells('A1:E1');
         $sheet->getStyle('A1')->getAlignment()->setHorizontal(
             PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        //var_dump($dataOrders);
         $stringNum = 3;
         foreach ($dataOrders[$status]->orders as $order){
 
@@ -68,10 +65,7 @@ if ($response->isSuccessful()) {
         $index++;
         $stringNum = 3;
     }
-    //
 
-    // Выводим HTTP-заголовки
-    //header('Content-Type: text/html; charset=utf-8');
     header ( "Expires: Mon, 1 Apr 1974 05:00:00 GMT" );
     header ( "Last-Modified: " . gmdate("D,d M YH:i:s") . " GMT" );
     header ( "Cache-Control: no-cache, must-revalidate" );
@@ -79,7 +73,6 @@ if ($response->isSuccessful()) {
     header ( "Content-type: application/vnd.ms-excel" );
     header ( "Content-Disposition: attachment; filename=retailcrm.xls" );
 
-// Выводим содержимое файла
     $objWriter = new PHPExcel_Writer_Excel5($xls);
     $objWriter->save('php://output');
     $xls = null;
